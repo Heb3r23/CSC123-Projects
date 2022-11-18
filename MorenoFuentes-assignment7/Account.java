@@ -64,10 +64,17 @@ public abstract class Account {
 		return transactions;
 	}
 	
-	public void printStatement() {
+	public String printStatement(boolean check) {
+		String ret = "";
+		
 		for(Transaction b: getTransactions()) {
-			System.out.println(b.toString());
+			ret+=b.toString();
+			ret+="\n";
+			if(check)
+				System.out.println(b.toString());
 		}
+		
+		return ret;
 	}
 	
 	public void close() {
