@@ -1,6 +1,11 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) {
@@ -63,6 +68,7 @@ public class Main {
 				Bank.listAccounts();
 			}
 			else if(menuSelection == 5) {
+				boolean check = true;
 				System.out.println("Enter account number: ");
 				lookupNumber = input.nextInt();
 				
@@ -72,7 +78,7 @@ public class Main {
 					System.out.println("Account not found");
 				}
 				else {
-					a.printStatement();
+					a.printStatement(check);
 				}
 				
 			}
@@ -130,6 +136,14 @@ public class Main {
 				}
 			}
 			else if(menuSelection == 9) {
+				try {
+					printFile();
+				}
+				catch (IOException ex) {
+					System.out.println("Error: file not created");
+					System.exit(0);
+				}
+				
 				System.exit(0);
 			}
 		}
@@ -140,5 +154,53 @@ public class Main {
 	
 	public static void printMenu() {
 		System.out.println("\n\n1 - Open Checking Account \n2 - Open Saving Accounts \n3 - Open Credit Card Account \n4 - List Accounts \n5 - Account Statement \n6 - Deposit Funds \n7 - Withdraw Funds \n8 - Close an Account \n9 - Exit \nPlease enter your choice:");
+	}
+	
+	public static void printFile() throws IOException {
+		
+		PrintWriter p = new PrintWriter("Receipt");
+		p.write(printAllStatements());
+		p.close();
+
+	}
+	
+	public static String printAllStatements() {
+		boolean check = false;
+		int lookupNumber = 1001;
+		String ret = "";
+		
+		Account a = Bank.lookup(lookupNumber);
+		
+		ret += ("Customer List: \n\n");
+		while(a!=null) {
+			ret+=(a.getAccountHolder());
+			ret+="\n";
+			lookupNumber++;
+			a = Bank.lookup(lookupNumber);
+		}
+		
+		lookupNumber = 1001;
+		a = Bank.lookup(lookupNumber);
+		
+		ret += ("\n\nAccount List:  \n\n");
+		while(a!=null) {
+			ret+=(a);
+			ret += "\n";
+			lookupNumber++;
+			a = Bank.lookup(lookupNumber);
+		}
+		
+		lookupNumber = 1001;
+		a = Bank.lookup(lookupNumber);
+		
+		ret += ("\n\nTransaction Statements: \n\n");
+		while(a!=null) {
+			ret += ("Transaction Statement for Account " + a.getAccountNumber() + ":\n\n");
+			ret+=(a.printStatement(check));
+			lookupNumber++;
+			a = Bank.lookup(lookupNumber);
+		}
+		
+		return ret;
 	}
 }
