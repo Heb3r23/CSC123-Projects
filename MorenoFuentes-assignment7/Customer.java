@@ -1,6 +1,9 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private String ssn;

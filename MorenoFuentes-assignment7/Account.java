@@ -1,9 +1,11 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
 	private static int accountNumberCounter = 1000;
+	private static final long serialVersionUID = 1L;
 	
 	private String accountName;
 	private Customer accountHolder;
@@ -65,9 +67,11 @@ public abstract class Account {
 	}
 	
 	public void printStatement() {
+		
 		for(Transaction b: getTransactions()) {
-			System.out.println(b.toString());
+				System.out.println(b.toString());
 		}
+		
 	}
 	
 	public void close() {

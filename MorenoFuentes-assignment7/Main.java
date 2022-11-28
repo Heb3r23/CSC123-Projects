@@ -1,6 +1,14 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Main {
 	public static void main(String[] args) {
@@ -130,6 +138,14 @@ public class Main {
 				}
 			}
 			else if(menuSelection == 9) {
+				try {
+					printFile();
+				}
+				catch (IOException ex) {
+					System.out.println("Error: file not created");
+					System.exit(0);
+				}
+				
 				System.exit(0);
 			}
 		}
@@ -141,4 +157,28 @@ public class Main {
 	public static void printMenu() {
 		System.out.println("\n\n1 - Open Checking Account \n2 - Open Saving Accounts \n3 - Open Credit Card Account \n4 - List Accounts \n5 - Account Statement \n6 - Deposit Funds \n7 - Withdraw Funds \n8 - Close an Account \n9 - Exit \nPlease enter your choice:");
 	}
+	
+	public static void printFile() throws IOException {
+		
+		File f = new File("Reciept.txt");
+		int lookupNumber = 1001;
+		
+		
+		FileOutputStream fileOut = new FileOutputStream(f);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		
+		Account a = Bank.lookup(lookupNumber);
+		ArrayList<Object> objs = new ArrayList<Object>();
+		
+		while(a != null) {
+			objs.add(a);
+	        lookupNumber++;
+	        a = Bank.lookup(lookupNumber);
+			}
+		out.writeObject(objs);
+		out.flush();
+		out.close();
+
+	}
+	
 }

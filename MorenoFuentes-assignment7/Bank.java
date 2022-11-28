@@ -1,8 +1,10 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Bank {
+public class Bank implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<Account> accounts = new ArrayList<Account>();
 	
 	public static SavingsAccount openSavingsAccount(String firstName, String lastName, String ssn) {

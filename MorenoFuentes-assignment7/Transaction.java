@@ -1,6 +1,9 @@
 //Heber Moreno Fuentes (hmorenofuentes1@toromail.csudh.edu
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable{
+	private static final long serialNumberUID = 1L;
 	private static int transactionIdCounter = 100000;
 	
 	private int transactionID;
